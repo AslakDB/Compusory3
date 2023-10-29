@@ -6,15 +6,11 @@
 /// \param end 
 void graphs::add_edge(int start, int end)
 {
-    
-    
-
+    adjecencyList[start].push_back(end);
 }
 
-void graphs::addvertex(int node, int weight)
+void graphs::addvertex()
 {
-    adjecencyList[node].push_back(node);
-    this->weight = weight;
     numberOfVertices ++;
     adjecencyList.resize(numberOfVertices);
 }
@@ -47,10 +43,25 @@ void graphs::print_graph()
     }
 }
 
-int graphs::returnNodeInformation(int node)
+void graphs::returnNodeInformation(int node)
 {
-    //Todo: return the information of a node after giving nodes weight so that there is something to return
-    return 0;
+    cout<<"The node is: "<<node<<endl;
+    
+}
+
+void graphs::returnEgdes()
+{
+    int edges = 0;
+    for (int i = 0; i < numberOfVertices; ++i)
+    {
+        edges += adjecencyList[i].size();
+    }
+    cout<<"The number of edges are: "<<edges<<endl;
+}
+
+void graphs::returnvertices()
+{
+    cout<<"The number of vertecies are: "<<numberOfVertices<<endl;
 }
 
 void graphs::getadjecentNodes(int node)
@@ -62,23 +73,85 @@ void graphs::getadjecentNodes(int node)
     }
 }
 
+void graphs::returnSize()
+{
+    int edges = 0;
+    for (int i = 0; i < numberOfVertices; ++i)
+    {
+        edges += adjecencyList[i].size();
+    }
+    cout<<"The size of the graph is: vertecies + nodes witch is "<<numberOfVertices + edges<<endl;
+}
+
+void graphs::deleteEdge(int Start, int End) {
+    // Find the index of the destination vertex in the source vertex's adjacency list
+    int destIndex = -1;
+    for (int i = 0; i < adjecencyList[Start].size(); i++) {
+        if (adjecencyList[Start][i] == End) {
+            destIndex = i;
+            break;
+        }
+    }
+    // Remove the destination vertex from the source vertex's adjacency list
+    if (destIndex != -1) {
+        adjecencyList[Start].erase(adjecencyList[Start].begin() + destIndex);
+    }
+
+    // Find the index of the source vertex in the destination vertex's adjacency list
+    int SourceIndex = -1;
+    for (int i = 0; i < adjecencyList[End].size(); i++) {
+        if (adjecencyList[End][i] == Start) {
+            SourceIndex = i;
+            break;
+        }
+    }
+    // Remove the source vertex from the destination vertex's adjacency list
+    if (SourceIndex != -1) {
+        adjecencyList[End].erase(adjecencyList[End].begin() + SourceIndex);
+    }
+}
+
+void graphs::isEmpty(int node)
+{
+    if (adjecencyList[node].size() == 0) {
+        cout <<"this node is empty" << endl;
+    } else {
+        cout <<"is not empty" << endl;
+    }
+}
+
+void graphs::traverse()
+{
+    
+}
+
 
 int main()
 {
- graphs graph;
+ graphs graph(5);
 
-graph.addvertex(0, 33);    
-graph.addvertex(1, 0);    
-graph.addvertex(2, 17);   
-graph.addvertex(3, 2);    
-graph.addvertex(4, 56);   
+graph.addvertex();
+graph.addvertex();
 
    graph.add_edge(0, 1 );
    graph.add_edge(0, 2); 
    graph.add_edge(1, 3);
    graph.add_edge(2, 3);
    graph.add_edge(3, 4);
+    graph.add_edge(5, 4);
+    graph.add_edge(5, 2);
+    graph.add_edge(4, 6);
 
-    //graph.returnNodeInformation(3);
-    graph.print_graph();
+    graph.deleteEdge(0, 1);
+
+
+    graph.isEmpty(6);
+    
+    // graph.returnNodeInformation(3);
+    // graph.print_graph();
+    // graph.are_connected(0, 1);
+    // graph.returnEgdes();
+    // graph.getadjecentNodes(1);
+    // graph.returnvertices();
+    // graph.returnSize();
 }

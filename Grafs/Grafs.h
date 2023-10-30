@@ -6,8 +6,9 @@ using namespace std;
 
 class graphs {
 public:
-    int numberOfVertices = 0;
+    int numberOfVertices;
     vector<vector<int>> adjecencyList;
+    vector<int> visited_list;
 
 
     graphs(int numberofvertices) {
@@ -20,6 +21,7 @@ public:
 
     void addvertex();
 
+    void addrandomvertex();
     
     void deleteEdge(int src, int End);
     
@@ -39,7 +41,9 @@ public:
 
 void isEmpty(int node);
 
-    void traverse();
+    void traverse(int startnode);
+
+    
     
     void getadjecentNodes(int node);
     

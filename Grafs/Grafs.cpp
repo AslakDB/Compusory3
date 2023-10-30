@@ -120,9 +120,36 @@ void graphs::isEmpty(int node)
     }
 }
 
-void graphs::traverse()
+void graphs::addrandomvertex()
+{
+    srand(time(NULL));
+    int random = rand() % 10 + 1;
+    numberOfVertices += random;
+    adjecencyList.resize(numberOfVertices);
+    
+}
+
+
+void graphs::traverse(int startnode)
 {
     
+    visited_list.push_back(startnode);
+    cout<<"The node is: "<<startnode<<endl;
+    for (int i = 0; i < adjecencyList[startnode].size() ; ++i)
+    {
+        bool visited = false;
+        for (int j = 0; j < visited_list.size(); ++j)
+        {
+            if (visited_list[j] == adjecencyList[startnode][i])
+            {
+                visited = true;
+            }
+        }
+        if (!visited)
+        {
+            traverse(adjecencyList[startnode][i]);
+        }
+    }
 }
 
 
@@ -132,6 +159,7 @@ int main()
 
 graph.addvertex();
 graph.addvertex();
+    //graph.addrandomvertex();
 
    graph.add_edge(0, 1 );
    graph.add_edge(0, 2); 
@@ -141,8 +169,10 @@ graph.addvertex();
     graph.add_edge(5, 4);
     graph.add_edge(5, 2);
     graph.add_edge(4, 6);
+    graph.add_edge(6, 1);
+    
 
-    graph.deleteEdge(0, 1);
+    //graph.deleteEdge(0, 1);
 
 
     graph.isEmpty(6);
@@ -150,8 +180,9 @@ graph.addvertex();
     // graph.returnNodeInformation(3);
     // graph.print_graph();
     // graph.are_connected(0, 1);
-    // graph.returnEgdes();
+    graph.returnEgdes();
     // graph.getadjecentNodes(1);
-    // graph.returnvertices();
+     graph.returnvertices();
     // graph.returnSize();
+     //graph.traverse(0);
 }
